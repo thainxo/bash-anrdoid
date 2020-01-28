@@ -1823,7 +1823,9 @@ get_current_user_info ()
 	}
       else
 	{
-	  current_user.user_name = _("I have no name!");
+	  current_user.user_name = getenv("USER");
+	  if (!current_user.user_name)
+		  current_user.user_name = _("I have no name!");
 	  current_user.user_name = savestring (current_user.user_name);
 	  current_user.shell = savestring ("/bin/sh");
 	  current_user.home_dir = savestring ("/");
@@ -1864,10 +1866,12 @@ shell_initialize ()
   if (current_host_name == 0)
     {
       /* Initialize current_host_name. */
-      if (gethostname (hostname, 255) < 0)
-	current_host_name = "??host??";
+      if (getenv("HOSTNAME"))
+       current_host_name = savestring (getenv("HOSTNAME"));
+      else if (gethostname (hostname, 255) >= 0)
+       current_host_name = savestring (hostname);
       else
-	current_host_name = savestring (hostname);
+       current_host_name = "??host??";
     }
 
   /* Initialize the stuff in current_user that comes from the password
