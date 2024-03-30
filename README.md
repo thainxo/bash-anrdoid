@@ -19,7 +19,7 @@ git clone https://github.com/dmikushin/bash-anrdoid.git
 cd bash-android
 mkdir build
 cd build
-../configure --prefix=$(pwd)/../install --host=arm-linux-gnueabi --enable-static-link
+../configure --prefix=$(pwd)/../install --host=arm-linux-gnueabi --enable-static-link --without-bash-malloc
 make -j12
 ```
 
